@@ -5,9 +5,11 @@ import com.example.app.negocio.excecao.NomeMenorCincoCaracteresException;
 import com.example.app.negocio.excecao.PaisNaoDefinidoException;
 import com.example.app.negocio.validador.FabricaValidadorTelefone;
 import com.example.app.negocio.validador.TelefoneNaoCorrespondePaisException;
+import com.example.app.persistencia.Cliente;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -97,6 +99,35 @@ public class ClienteDTO {
 
     public static ClienteDTO DTOFromModel (ClienteModel cliente) {
         return ClienteDTO.builder()
+                .id(cliente.getId())
+                .idade(cliente.getIdade())
+                .nome(cliente.getNome())
+                .telefone(cliente.getTelefone())
+                .limiteCredito(cliente.getLimiteCredito())
+                .build();
+    }
+
+    public static ClienteDTO DTOFromEntity(Cliente cliente) {
+        return ClienteDTO.builder()
+                .id(cliente.getId())
+                .idade(cliente.getIdade())
+                .nome(cliente.getNome())
+                .telefone(cliente.getTelefone())
+                .limiteCredito(cliente.getLimiteCredito())
+                .build();
+    }
+
+    public static Set<ClienteDTO> DTOsFromEntities(List<Cliente> clientes) {
+        var resultado = new HashSet<ClienteDTO>();
+
+        for (Cliente clienteAtual : clientes)
+            resultado.add(ClienteDTO.DTOFromEntity(clienteAtual));
+
+        return resultado;
+    }
+
+    public static Cliente EntityFromDTO (ClienteDTO cliente) {
+        return Cliente.builder()
                 .id(cliente.getId())
                 .idade(cliente.getIdade())
                 .nome(cliente.getNome())
