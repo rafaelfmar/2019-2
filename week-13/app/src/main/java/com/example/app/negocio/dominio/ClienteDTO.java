@@ -1,21 +1,23 @@
 package com.example.app.negocio.dominio;
 
+import com.example.app.apresentacao.ClienteModel;
 import com.example.app.negocio.excecao.NomeMenorCincoCaracteresException;
 import com.example.app.negocio.excecao.PaisNaoDefinidoException;
 import com.example.app.negocio.validador.FabricaValidadorTelefone;
 import com.example.app.negocio.validador.TelefoneNaoCorrespondePaisException;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
 public class ClienteDTO {
     
-    private int id;
+    private long id;
 
     @EqualsAndHashCode.Include
     private String nome;
@@ -72,5 +74,34 @@ public class ClienteDTO {
         
         else
             throw new TelefoneNaoCorrespondePaisException();
+    }
+
+    public static Set<ClienteModel> ModelsFromDTOs (Set<ClienteDTO> clientes) {
+        var resultado = new HashSet<ClienteModel>();
+
+        for (ClienteDTO clienteAtual: clientes)
+            resultado.add(ClienteDTO.ModelFromDTO(clienteAtual));
+
+        return resultado;
+    }
+
+    public static ClienteModel ModelFromDTO (ClienteDTO cliente) {
+        return ClienteModel.builder()
+                .id(cliente.getId())
+                .idade(cliente.getIdade())
+                .nome(cliente.getNome())
+                .telefone(cliente.getTelefone())
+                .limiteCredito(cliente.getLimiteCredito())
+                .build();
+    }
+
+    public static ClienteDTO DTOFromModel (ClienteModel cliente) {
+        return ClienteDTO.builder()
+                .id(cliente.getId())
+                .idade(cliente.getIdade())
+                .nome(cliente.getNome())
+                .telefone(cliente.getTelefone())
+                .limiteCredito(cliente.getLimiteCredito())
+                .build();
     }
 }
