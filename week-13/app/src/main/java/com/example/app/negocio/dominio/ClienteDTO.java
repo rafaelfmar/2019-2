@@ -108,7 +108,7 @@ public class ClienteDTO {
                 .nome(cliente.getNome())
                 .telefone(cliente.getTelefone())
                 .limiteCredito(cliente.getLimiteCredito())
-                .pais(paisDAO.findByNome(cliente.getPais()))
+                .pais(PaisDTO.DTOFromEntity(paisDAO.findByNome(cliente.getPais())))
                 .build();
     }
 
