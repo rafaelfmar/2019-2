@@ -6,6 +6,7 @@ import com.example.app.negocio.excecao.PaisNaoDefinidoException;
 import com.example.app.negocio.validador.FabricaValidadorTelefone;
 import com.example.app.negocio.validador.TelefoneNaoCorrespondePaisException;
 import com.example.app.persistencia.Cliente;
+import com.example.app.persistencia.PaisDAO;
 import lombok.*;
 
 import java.util.HashSet;
@@ -18,8 +19,10 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 public class ClienteDTO {
-    
+
     private long id;
+
+    private PaisDAO paisDAO;
 
     @EqualsAndHashCode.Include
     private String nome;
@@ -105,6 +108,7 @@ public class ClienteDTO {
                 .nome(cliente.getNome())
                 .telefone(cliente.getTelefone())
                 .limiteCredito(cliente.getLimiteCredito())
+                .pais(paisDAO.findByNome(cliente.getPais()))
                 .build();
     }
 
