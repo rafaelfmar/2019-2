@@ -15,4 +15,6 @@ public class ClienteModel {
     private int idade;
     private double limiteCredito;
     private String telefone;
+
+    private String pais;
 }

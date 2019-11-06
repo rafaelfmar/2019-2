@@ -94,6 +94,7 @@ public class ClienteDTO {
                 .nome(cliente.getNome())
                 .telefone(cliente.getTelefone())
                 .limiteCredito(cliente.getLimiteCredito())
+                .pais(cliente.getPais().getNome())
                 .build();
     }
 
